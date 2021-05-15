@@ -8,13 +8,38 @@
 # formal written and signed agreement with neonFORGE, LLC.
 
 #------------------------------------------------------------------------------
-# Clears the runner state including the GITHUB_WORKSPACE directory.
+# Builds and publishes neonCLOUDcontainer images.
 #
 # NOTE: You must run the [setup-node] action before this to ensure that
 #       Node.js is configured on the runner.
 
 name: build-neoncloud-containers
-description: "Clears the runner state including the GITHUB_WORKSPACE directory"
+description: "Builds and publishes neonCLOUDcontainer images."
+inputs:
+  images:
+    description: "Specifies which containers to build (all base layer other service test)"
+    required: false
+    default: "all"
+  options: 
+    description: "Specifies options (clean public prune publish):"
+    required: false
+    default: "clean public prune publish"
+  build-log:
+    description: "Specifies the path where the build log should be written"
+    required: true
+outputs:
+  success:
+    description: "Returns as 'true' on success"
+  build-branch:
+    description: "Returns the the build branch"
+  build-config:
+    description: "Returns as the build configuration"
+  build-commit:
+    description: "Returns the the build commit"
+  build-log: 
+    description: "Returns as the path to the build log"
+  build-issue-uri:
+    description: "Returns as the GitHub issue URI (if an issue was created)"
 runs:
   using: node12
   main: action.js
