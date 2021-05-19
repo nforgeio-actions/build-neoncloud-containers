@@ -27,9 +27,9 @@ if ([System.String]::IsNullOrEmpty($ncRoot) -or ![System.IO.Directory]::Exists($
 
 $ncPowershell = [System.IO.Path]::Combine($ncRoot, "Powershell")
 
-Push-Location $ncPowershell
+Push-Cwd $ncPowershell
 . ./includes.ps1
-Pop-Location
+Pop-Cwd
 
 # Read the inputs
 
@@ -113,7 +113,7 @@ try
 
     # Fetch the current branch and commit from git
 
-    Push-Location $ncRoot
+    Push-Cwd $ncRoot
 
         $branch = $(& git branch --show-current).Trim()
         ThrowOnExitCode
@@ -121,7 +121,7 @@ try
         $commit = $(& git rev-parse HEAD).Trim()
         ThrowOnExitCode
 
-    Pop-Location
+    Pop-Cwd
 
     # Set default outputs
 
