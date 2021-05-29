@@ -164,7 +164,7 @@ try
     #
     # Remove this line when it does work:
 
-    $clean = false
+    $clean = $false
 
     if ($clean)
     {
