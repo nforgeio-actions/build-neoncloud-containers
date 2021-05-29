@@ -179,6 +179,16 @@ try
     pwsh -File $scriptPath -NonInteractive $allOption $baseOption $layerOption $otherOption $serviceOption $testOption $noPruneOption $noPushOption 6>&1 2>&1 > $buildLog
     ThrowOnExitCode
 
+    #------------------------------------------------------
+    # Make all of the public images public when requested 
+
+    # $debug(jefflill): SetVisibility isn't working either:
+    #
+    #   https://github.com/nforgeio/neonCLOUD/issues/149
+
+    $public = $false
+    #------------------------------------------------------
+
     # Make all of the public images public when requested 
 
     if ($publish -and $public)
