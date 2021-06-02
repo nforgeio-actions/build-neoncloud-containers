@@ -176,7 +176,7 @@ try
     $scriptPath = [System.IO.Path]::Combine($ncRoot, "Images", "publish.ps1")
 
     Write-ActionOutput "Building container images"
-    pwsh -File $scriptPath -NonInteractive $allOption $baseOption $layerOption $otherOption $serviceOption $testOption $noPruneOption $noPushOption 2>&1 > $buildLog
+    pwsh -File $scriptPath -NonInteractive $allOption $baseOption $layerOption $otherOption $serviceOption $testOption $noPruneOption $noPushOption > $buildLog 2>&1
     ThrowOnExitCode
 
     #------------------------------------------------------
