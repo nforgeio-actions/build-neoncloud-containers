@@ -168,7 +168,12 @@ try
 
     if ($clean)
     {
-        Remove-GitHub-Container $neonkubeRegistry "*"
+        # $todo(jefflill):
+        #
+        # I think we should be removing the setup and base containers, not 
+        # the neonKUBE ocntainers here, right?
+
+        # Remove-GitHub-Container $neonkubeRegistry "*"
     }
 
     # Execute the build/publish script
