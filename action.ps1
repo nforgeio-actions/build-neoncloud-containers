@@ -33,9 +33,10 @@ Pop-Location | Out-Null
 
 # Read the inputs
 
-$images   = Get-ActionInput "images"    $true
-$options  = Get-ActionInput "options"   $false
-$buildLog = Get-ActionInput "build-log" $true
+$images      = Get-ActionInput "images"      $true
+$options     = Get-ActionInput "options"     $false
+$buildLog    = Get-ActionInput "build-log"   $true
+$parallelism = Get-ActionInput "parallelism" $true
 
 if ([System.String]::IsNullOrWhitespace($images))
 {
@@ -62,14 +63,15 @@ try
 
     # Configure the [$/neonKUBE/Images/publish.ps1] script options
 
-    $allOption     = ""
-    $baseOption    = ""
-    $layerOption   = ""
-    $otherOption   = ""
-    $serviceOption = ""
-    $testOption    = ""
-    $noPruneOption = ""
-    $noPushOption  = ""
+    $allOption         = ""
+    $baseOption        = ""
+    $layerOption       = ""
+    $otherOption       = ""
+    $serviceOption     = ""
+    $testOption        = ""
+    $noPruneOption     = ""
+    $noPushOption      = ""
+    $parallelismOption = "-parallelism $parallelism"
 
     if ($all)
     {
@@ -181,7 +183,7 @@ try
     $scriptPath = [System.IO.Path]::Combine($ncRoot, "Images", "publish.ps1")
 
     Write-ActionOutput "Building container images"
-    pwsh -File $scriptPath -NonInteractive $allOption $baseOption $layerOption $otherOption $serviceOption $testOption $noPruneOption $noPushOption > $buildLog 2>&1
+    pwsh -File $scriptPath -NonInteractive $allOption $baseOption $layerOption $otherOption $serviceOption $testOption $noPruneOption $noPushOption $parallelismOption > $buildLog 2>&1
     ThrowOnExitCode
 
     #------------------------------------------------------
