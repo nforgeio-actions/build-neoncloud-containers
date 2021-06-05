@@ -27,6 +27,10 @@ inputs:
   build-log:
     description: "Specifies the path where the build log should be written"
     required: true
+  parallelism:
+    description: "Specifies the number of containers to build in parallel"
+    required: false
+    default: "1"
 outputs:
   success:
     description: "Returns as 'true' on success"
