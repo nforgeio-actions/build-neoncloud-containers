@@ -183,10 +183,9 @@ try
     $scriptPath = [System.IO.Path]::Combine($ncRoot, "Images", "publish.ps1")
 
     Write-ActionOutput "Building container images"
-    pwsh -File $scriptPath -NonInteractive $allOption $baseOption $layerOption $otherOption $serviceOption $testOption $noPruneOption $noPushOption $parallelismOption > $buildLog 2>&1
-Log-DebugLine "*** build-neonkube-containers: 1"
     ThrowOnExitCode
-Log-DebugLine "*** build-neonkube-containers: 1"
+    pwsh -File $scriptPath -NonInteractive $allOption $baseOption $layerOption $otherOption $serviceOption $testOption $noPruneOption $noPushOption $parallelismOption > $buildLog 2>&1
+    ThrowOnExitCode
 
     #------------------------------------------------------
     # Make all of the public images public when requested 
@@ -200,26 +199,14 @@ Log-DebugLine "*** build-neonkube-containers: 1"
 
     # Make all of the public images public when requested 
 
-Log-DebugLine "*** build-neonkube-containers: 2"
     if ($publish -and $public)
     {
-Log-DebugLine "*** build-neonkube-containers: 3"
         Write-ActionOutput "Making neonCLOUD images public"
-Log-DebugLine "*** build-neonkube-containers: 4"
         Set-GitHub-Container-Visibility $neonkubeRegistry "*" public
-Log-DebugLine "*** build-neonkube-containers: 5"
     }
 }
 catch
 {
-#-------------------------------
-# $debug(jefflill): REMOVE THIS!
-$e = $_
-Log-DebugLine "*** build-neonkube-containers: 6"
-Log-DebugLine "*** build-neonkube-containers: 7: error: $e.Exception.message"
-Log-DebugLine "*** build-neonkube-containers: 8: stack trace"
-Log-DebugLine $e.ScriptStackTrace
-#-------------------------------
-    # Write-ActionException $_
+    Write-ActionException $_
     Set-ActionOutput "success" "false"
 }
